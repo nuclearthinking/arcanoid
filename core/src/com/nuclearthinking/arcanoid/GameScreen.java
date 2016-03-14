@@ -1,6 +1,8 @@
 package com.nuclearthinking.arcanoid;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.graphics.GL20;
 
 /**
  * Date: 12.03.2016
@@ -11,8 +13,10 @@ import com.badlogic.gdx.Screen;
 public class GameScreen implements Screen {
     final Arcanoid mainGame;
 
-    public GameScreen(final Arcanoid mainGame){
+    public GameScreen(final Arcanoid mainGame) {
         this.mainGame = mainGame;
+
+
     }
 
     @Override
@@ -22,7 +26,8 @@ public class GameScreen implements Screen {
 
     @Override
     public void render(float delta) {
-
+        Gdx.gl.glClearColor((float) 202 / 255, (float) 204 / 255, (float) 223 / 255, 0);
+        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
     }
 
     @Override
