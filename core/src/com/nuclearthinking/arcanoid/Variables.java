@@ -7,4 +7,9 @@ package com.nuclearthinking.arcanoid;
  * @author Vladislav Radchenko (onfient@gmail.com)
  */
 public class Variables {
+
+    public static final String TITLE = "Arcanoid";
+    public static final int WIDTH = 800;
+    public static final int HEIGHT = 460;
+    public static final int TOPMENU_HEIGHT = 34;
 }

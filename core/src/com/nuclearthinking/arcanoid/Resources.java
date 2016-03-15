@@ -1,6 +1,7 @@
 package com.nuclearthinking.arcanoid;
 
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
 
 import java.util.HashMap;
@@ -15,12 +16,10 @@ import java.util.Map;
 public class Resources {
 
     private Map<String, Texture> textures;
-    private Map<String, Color> colorPalette;
 
     private Resources() {
         textures = new HashMap<String, Texture>();
-        colorPalette = new HashMap<String, Color>();
-        fillPalette();
+        textures.put("topmenu", generateTopMenuTexture());
     }
 
     public static Resources getInstance() {
@@ -41,19 +40,12 @@ public class Resources {
         textures.put(key, new Texture(path));
     }
 
-    public Color getColor(String key) {
-        return colorPalette.get(key);
-    }
 
-
-    void fillPalette() {
-        colorPalette.put("brick1", new Color(0xd8e9d8ff));
-        colorPalette.put("brick2", new Color(0xfdf3d2ff));
-        colorPalette.put("brick3", new Color(0xf3d3d2ff));
-        colorPalette.put("brick4", new Color(0xf4d5e4ff));
-        colorPalette.put("brick5", new Color(0xdad5e6ff));
-        colorPalette.put("brick6", new Color(0xd4e4f2ff));
-        colorPalette.put("background", new Color(0xcaccdfff));
+    Texture generateTopMenuTexture() {
+        Pixmap pixmap = new Pixmap(Variables.WIDTH, Variables.TOPMENU_HEIGHT, Pixmap.Format.RGBA8888);
+        pixmap.setColor(ColorPalette.TOPMENU);
+        pixmap.fill();
+        return new Texture(pixmap);
     }
 
 }
