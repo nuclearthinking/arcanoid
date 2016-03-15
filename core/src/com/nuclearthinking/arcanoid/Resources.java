@@ -1,8 +1,8 @@
 package com.nuclearthinking.arcanoid;
 
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.math.Rectangle;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -16,10 +16,13 @@ import java.util.Map;
 public class Resources {
 
     private Map<String, Texture> textures;
+    private Map<String, Rectangle> rectangleMap;
 
     private Resources() {
         textures = new HashMap<String, Texture>();
+        rectangleMap = new HashMap<String, Rectangle>();
         textures.put("topmenu", generateTopMenuTexture());
+        rectangleMap.put("arcanoid", generateArcanoidRectagle());
     }
 
     public static Resources getInstance() {
@@ -36,16 +39,30 @@ public class Resources {
         return textures.get(key);
     }
 
+    public Rectangle getRectangle(String key) {
+        return rectangleMap.get(key);
+    }
+
     public void loadTexture(String key, String path) {
         textures.put(key, new Texture(path));
     }
 
 
     Texture generateTopMenuTexture() {
-        Pixmap pixmap = new Pixmap(Variables.WIDTH, Variables.TOPMENU_HEIGHT, Pixmap.Format.RGBA8888);
+        Pixmap pixmap = new Pixmap(Vars.WIDTH, Vars.TOPMENU_HEIGHT, Pixmap.Format.RGBA8888);
         pixmap.setColor(ColorPalette.TOPMENU);
         pixmap.fill();
         return new Texture(pixmap);
+    }
+
+    Rectangle generateArcanoidRectagle() {
+        Rectangle arcanoidRectangle = new Rectangle();
+        arcanoidRectangle.width = Vars.ARCANOID_WIDTH;
+        arcanoidRectangle.height = Vars.ARCANOID_HEIGHT;
+        //start position
+        arcanoidRectangle.x = Vars.WIDTH / 2 - Vars.ARCANOID_WIDTH / 2;
+        arcanoidRectangle.y = 20;
+        return arcanoidRectangle;
     }
 
 }
