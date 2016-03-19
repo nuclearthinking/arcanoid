@@ -22,7 +22,7 @@ public class Resources {
         textures = new HashMap<String, Texture>();
         rectangleMap = new HashMap<String, Rectangle>();
         textures.put("topmenu", generateTopMenuTexture());
-        rectangleMap.put("arcanoid", generateArcanoidRectagle());
+        rectangleMap.put("arcanoid", generateArcanoidRectangle());
     }
 
     public static Resources getInstance() {
@@ -31,8 +31,6 @@ public class Resources {
 
     private static class Holder {
         private static final Resources INSTANCE = new Resources();
-
-
     }
 
     public Texture getTexture(String key) {
@@ -47,7 +45,6 @@ public class Resources {
         textures.put(key, new Texture(path));
     }
 
-
     Texture generateTopMenuTexture() {
         Pixmap pixmap = new Pixmap(Vars.WIDTH, Vars.TOPMENU_HEIGHT, Pixmap.Format.RGBA8888);
         pixmap.setColor(ColorPalette.TOPMENU);
@@ -55,7 +52,7 @@ public class Resources {
         return new Texture(pixmap);
     }
 
-    Rectangle generateArcanoidRectagle() {
+    Rectangle generateArcanoidRectangle() {
         Rectangle arcanoidRectangle = new Rectangle();
         arcanoidRectangle.width = Vars.ARCANOID_WIDTH;
         arcanoidRectangle.height = Vars.ARCANOID_HEIGHT;

@@ -14,4 +14,8 @@ public class Vars {
     public static final int TOPMENU_HEIGHT = 34;
     public static final int ARCANOID_WIDTH = 120;
     public static final int ARCANOID_HEIGHT = 21;
+    public static final int BANNER_WIDTH = 502;
+    public static final int BANNER_HEIGHT = 62;
+    public static final int PLAY_BUTTON_WIDTH = 199;
+    public static final int PLAY_BUTTON_HEIGHT = 63;
 }
