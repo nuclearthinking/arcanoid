@@ -56,9 +56,8 @@ public class Resources {
         Rectangle arcanoidRectangle = new Rectangle();
         arcanoidRectangle.width = Vars.ARCANOID_WIDTH;
         arcanoidRectangle.height = Vars.ARCANOID_HEIGHT;
-        //start position
         arcanoidRectangle.x = Vars.WIDTH / 2 - Vars.ARCANOID_WIDTH / 2;
-        arcanoidRectangle.y = 20;
+        arcanoidRectangle.y = 5;
         return arcanoidRectangle;
     }
 

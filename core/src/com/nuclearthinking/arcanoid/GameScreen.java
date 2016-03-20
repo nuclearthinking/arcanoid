@@ -9,6 +9,8 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector3;
 
+import java.util.List;
+
 /**
  * Date: 12.03.2016
  * Time: 18:21
@@ -23,6 +25,7 @@ public class GameScreen implements Screen {
     Texture topMenu, arcanoid, hearth;
     Rectangle arcanoidBody;
     Player player;
+    Wall gameWall;
 
     public GameScreen(final Arcanoid mainGame) {
         this.mainGame = mainGame;
@@ -35,6 +38,7 @@ public class GameScreen implements Screen {
         arcanoidBody = resources.getRectangle("arcanoid");
         hearth = resources.getTexture("hearth");
         player = new Player();
+        gameWall = new Wall(Level.LEVEL2);
     }
 
     @Override
@@ -60,6 +64,13 @@ public class GameScreen implements Screen {
             mainGame.batch.draw(hearth, hearthXPos, Vars.HEIGHT - 25);
             hearthXPos -= 20;
         }
+
+        for (List<Brick> wallRow : gameWall.getWallArray()) {
+            for (Brick brick : wallRow) {
+                mainGame.batch.draw(brick.getTexture(), brick.x(), brick.y());
+            }
+        }
+
         mainGame.batch.end();
 
         mouseListener();
