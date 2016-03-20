@@ -20,7 +20,7 @@ public class MainMenuScreen implements Screen {
     Arcanoid game;
     Resources resources;
     OrthographicCamera camera;
-    Texture banner, play;
+    Texture banner, play, borderBottom, borderTop;
     Rectangle bannerBody, playBody;
     Color backgroundColor;
     Vector3 clickPoint;
@@ -34,6 +34,8 @@ public class MainMenuScreen implements Screen {
         camera.position.set(Vars.WIDTH / 2, Vars.HEIGHT / 2, 0);
         banner = resources.getTexture("banner");
         play = resources.getTexture("playbutton");
+        borderBottom = resources.getTexture("border");
+        borderTop = resources.getTexture("border");
         bannerBody = new Rectangle();
         bannerBody.width = Vars.BANNER_WIDTH;
         bannerBody.height = Vars.BANNER_HEIGHT;
@@ -62,6 +64,8 @@ public class MainMenuScreen implements Screen {
         game.batch.begin();
         game.batch.draw(banner, bannerBody.x, bannerBody.y);
         game.batch.draw(play, playBody.x, playBody.y);
+        game.batch.draw(borderBottom, 0, 0);
+        game.batch.draw(borderTop, 0, Vars.HEIGHT - 20);
         game.batch.end();
         if (Gdx.input.justTouched()) {
             camera.unproject(clickPoint.set(Gdx.input.getX(), Gdx.input.getY(), 0));

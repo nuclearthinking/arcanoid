@@ -18,9 +18,10 @@ public class Arcanoid extends Game {
         resources = Resources.getInstance();
         resources.loadTexture("brick", "brick.png");
         resources.loadTexture("arcanoid", "arcanoid.png");
-        resources.loadTexture("heart", "heart.png");
+        resources.loadTexture("hearth", "hearth.png");
         resources.loadTexture("playbutton", "playbutton.png");
         resources.loadTexture("banner", "banner.png");
+        resources.loadTexture("border", "border.png");
 
         batch = new SpriteBatch();
         font = new BitmapFont();

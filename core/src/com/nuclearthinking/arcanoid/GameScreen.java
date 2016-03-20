@@ -20,8 +20,9 @@ public class GameScreen implements Screen {
     Resources resources;
     Color backgroundColor;
     OrthographicCamera camera;
-    Texture topMenu, arcanoid;
+    Texture topMenu, arcanoid, hearth;
     Rectangle arcanoidBody;
+    Player player;
 
     public GameScreen(final Arcanoid mainGame) {
         this.mainGame = mainGame;
@@ -32,6 +33,8 @@ public class GameScreen implements Screen {
         topMenu = resources.getTexture("topmenu");
         arcanoid = resources.getTexture("arcanoid");
         arcanoidBody = resources.getRectangle("arcanoid");
+        hearth = resources.getTexture("hearth");
+        player = new Player();
     }
 
     @Override
@@ -41,6 +44,8 @@ public class GameScreen implements Screen {
 
     @Override
     public void render(float delta) {
+        int hearthXPos = Vars.WIDTH - (16 + 5);
+
         Gdx.gl.glClearColor(backgroundColor.r, backgroundColor.g, backgroundColor.b, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         camera.update();
@@ -50,6 +55,11 @@ public class GameScreen implements Screen {
         mainGame.batch.begin();
         mainGame.batch.draw(topMenu, 0, Vars.HEIGHT - Vars.TOPMENU_HEIGHT);
         mainGame.batch.draw(arcanoid, arcanoidBody.x, arcanoidBody.y);
+
+        for (int i = 0; i < player.getLifeAmount(); i++) {
+            mainGame.batch.draw(hearth, hearthXPos, Vars.HEIGHT - 25);
+            hearthXPos -= 20;
+        }
         mainGame.batch.end();
 
         mouseListener();

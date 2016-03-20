@@ -17,5 +17,5 @@ public class ColorPalette {
     public static final Color BRICK5 = new Color(0xdad5e6ff);
     public static final Color BRICK6 = new Color(0xd4e4f2ff);
     public static final Color BACKGROUND = new Color(0xcaccdfff);
-    public static final Color TOPMENU = new Color(0x8683baff);
+    public static final Color TOPMENU = new Color(0x809dc8ff);
 }
