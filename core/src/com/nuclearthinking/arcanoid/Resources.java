@@ -15,8 +15,8 @@ import java.util.Map;
  */
 public class Resources {
 
-    private Map<String, Texture> textures;
-    private Map<String, Rectangle> rectangleMap;
+    private final Map<String, Texture> textures;
+    private final Map<String, Rectangle> rectangleMap;
 
     private Resources() {
         textures = new HashMap<String, Texture>();
@@ -45,14 +45,14 @@ public class Resources {
         textures.put(key, new Texture(path));
     }
 
-    Texture generateTopMenuTexture() {
+    private Texture generateTopMenuTexture() {
         Pixmap pixmap = new Pixmap(Vars.WIDTH, Vars.TOPMENU_HEIGHT, Pixmap.Format.RGBA8888);
         pixmap.setColor(ColorPalette.TOPMENU);
         pixmap.fill();
         return new Texture(pixmap);
     }
 
-    Rectangle generateArcanoidRectangle() {
+    private Rectangle generateArcanoidRectangle() {
         Rectangle arcanoidRectangle = new Rectangle();
         arcanoidRectangle.width = Vars.ARCANOID_WIDTH;
         arcanoidRectangle.height = Vars.ARCANOID_HEIGHT;

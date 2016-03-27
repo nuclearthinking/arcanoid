@@ -8,11 +8,11 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 public class Arcanoid extends Game {
 
     SpriteBatch batch;
-    BitmapFont font;
-    Resources resources;
+    private BitmapFont font;
+    private Resources resources;
 
     @Override
-    public void create() {
+    public final void create() {
         resources = Resources.getInstance();
         resources.loadTexture("arcanoid", "arcanoid.png");
         resources.loadTexture("hearth", "hearth.png");
@@ -25,6 +25,7 @@ public class Arcanoid extends Game {
         resources.loadTexture("brick4", "brick4.png");
         resources.loadTexture("brick5", "brick5.png");
         resources.loadTexture("brick6", "brick6.png");
+        resources.loadTexture("ball", "ball.png");
 
         batch = new SpriteBatch();
         font = new BitmapFont();
@@ -32,13 +33,14 @@ public class Arcanoid extends Game {
     }
 
     @Override
-    public void render() {
+    public final void render() {
         super.render();
     }
 
     @Override
-    public void dispose() {
+    public final void dispose() {
         batch.dispose();
         font.dispose();
     }
 }
+

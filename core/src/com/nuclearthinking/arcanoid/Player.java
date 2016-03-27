@@ -6,6 +6,8 @@ package com.nuclearthinking.arcanoid;
  *
  * @author Vladislav Radchenko (onfient@gmail.com)
  */
+
+//TODO: Удалить игрока
 public class Player {
 
     private int lifeAmount;

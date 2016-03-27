@@ -14,35 +14,28 @@ public enum BrickType {
     BRICK5(5),
     BRICK6(6);
 
-    int typeId;
+    final int typeId;
 
     BrickType(int i) {
         typeId = i;
     }
 
-    public static BrickType byId(int i) {
+    public static BrickType byId(final int i) {
         switch (i) {
-            case 1: {
+            case 1:
                 return BRICK1;
-            }
-            case 2: {
+            case 2:
                 return BRICK2;
-            }
-            case 3: {
+            case 3:
                 return BRICK3;
-            }
-            case 4: {
+            case 4:
                 return BRICK4;
-            }
-            case 5: {
+            case 5:
                 return BRICK5;
-            }
-            case 6: {
+            case 6:
                 return BRICK6;
-            }
-            default: {
+            default:
                 return BRICK1;
-            }
         }
     }
 }

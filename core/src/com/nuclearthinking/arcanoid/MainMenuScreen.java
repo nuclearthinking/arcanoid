@@ -17,13 +17,17 @@ import com.badlogic.gdx.math.Vector3;
  */
 public class MainMenuScreen implements Screen {
 
-    Arcanoid game;
-    Resources resources;
-    OrthographicCamera camera;
-    Texture banner, play, borderBottom, borderTop;
-    Rectangle bannerBody, playBody;
-    Color backgroundColor;
-    Vector3 clickPoint;
+    private final Arcanoid game;
+    private final Resources resources;
+    private final OrthographicCamera camera;
+    private final Texture banner;
+    private final Texture play;
+    private final Texture borderBottom;
+    private final Texture borderTop;
+    private final Rectangle bannerBody;
+    private final Rectangle playBody;
+    private final Color backgroundColor;
+    private final Vector3 clickPoint;
 
     public MainMenuScreen(final Arcanoid game) {
         this.game = game;
