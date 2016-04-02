@@ -24,7 +24,6 @@ public class ContactsListener implements ContactListener {
     @Override
     public void endContact(Contact contact) {
         if (contact.getFixtureA().getBody().getUserData() instanceof Brick && contact.getFixtureB().getUserData() == EntityDictionary.BALL) {
-            System.out.println("THIS IS BRICK!");
             DeleteQueue.add(contact.getFixtureA().getBody());
         }
     }

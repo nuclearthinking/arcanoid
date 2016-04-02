@@ -1,14 +1,11 @@
 package com.nuclearthinking.arcanoid;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.World;
-import com.badlogic.gdx.utils.Array;
 import com.nuclearthinking.arcanoid.objects.*;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Date: 02.04.2016
@@ -26,6 +23,8 @@ public class Controller {
     private Border border;
     private Wall wall;
 
+    boolean mouseClicked = false;
+
     public Controller(World world) {
         this.world = world;
         deleteQueue = new DeleteQueue();
@@ -41,35 +40,48 @@ public class Controller {
     }
 
     public final void update() {
+        mouseListener();
         world.step(Gdx.graphics.getDeltaTime(), 6, 2);
+        isDead();
         executeCleaning();
     }
 
-    private final BodyDef dynamicBody() {
-        BodyDef bodyDef = new BodyDef();
-        bodyDef.type = BodyDef.BodyType.DynamicBody;
-        return bodyDef;
-    }
-
-    private final BodyDef staticBody() {
-        BodyDef bodyDef = new BodyDef();
-        bodyDef.type = BodyDef.BodyType.StaticBody;
-        return bodyDef;
-    }
-
-
     private void executeCleaning() {
-        Array<Body> deleteQueue = DeleteQueue.getQueue();
-        ArrayList<List<Brick>> bricklist = wall.getWallArray();
-        for (Body body : deleteQueue) {
+        for (Body body : DeleteQueue.getQueue()) {
             Brick brick = (Brick) body.getUserData();
             wall.destroy(brick);
             world.destroyBody(body);
         }
-
-
         DeleteQueue.clear();
     }
+
+    private void mouseListener() {
+        Vector2 touchPos = new Vector2();
+        touchPos.set(Gdx.input.getX(), Gdx.input.getY());
+        platform.move(touchPos);
+        if (!mouseClicked) {
+            ball.move(platform.getPosition());
+        }
+
+        if (Gdx.input.justTouched()) {
+            if (!mouseClicked) {
+                System.out.println("mouse clicked");
+                ball.getBody().setLinearVelocity(0, 200);
+                mouseClicked = true;
+            }
+        }
+    }
+
+    private void isDead() {
+        int ballY = (int) ball.getPosition().y;
+        if (ballY <= 0) {
+            System.out.println("Lose one life");
+            GameState.getInstance().loseLife();
+            mouseClicked = false;
+        }
+
+    }
+
 
     public Ball getBall() {
         return ball;
@@ -101,5 +113,17 @@ public class Controller {
 
     public void setWall(Wall wall) {
         this.wall = wall;
+    }
+
+    private final BodyDef dynamicBody() {
+        BodyDef bodyDef = new BodyDef();
+        bodyDef.type = BodyDef.BodyType.DynamicBody;
+        return bodyDef;
+    }
+
+    private final BodyDef staticBody() {
+        BodyDef bodyDef = new BodyDef();
+        bodyDef.type = BodyDef.BodyType.StaticBody;
+        return bodyDef;
     }
 }

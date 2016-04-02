@@ -18,5 +18,19 @@ public class GameState {
     }
 
     private GameState() {
+        lifeAmount = 3;
+    }
+
+    public int getLifeAmount() {
+        return lifeAmount;
+    }
+
+    public void loseLife() {
+        if (lifeAmount > 0) {
+            lifeAmount--;
+        } else {
+            System.out.println("Game Over");
+        }
+
     }
 }

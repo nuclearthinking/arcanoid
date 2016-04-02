@@ -1,10 +1,12 @@
 package com.nuclearthinking.arcanoid.objects;
 
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.CircleShape;
 import com.badlogic.gdx.physics.box2d.Fixture;
 import com.nuclearthinking.arcanoid.EntityDictionary;
+import com.nuclearthinking.arcanoid.Resources;
 
 /**
  * Date: 26.03.2016
@@ -13,23 +15,36 @@ import com.nuclearthinking.arcanoid.EntityDictionary;
  * @author Vladislav Radchenko (onfient@gmail.com)
  */
 public class Ball {
-    private Fixture ballPhysicFixture;
     private Body body;
+    private Texture texture;
 
     public Ball(Body body) {
         this.body = body;
+        texture = Resources.getInstance().getTexture("ball");
+
         CircleShape circle = new CircleShape();
-        circle.setRadius(6);
-        circle.setPosition(new Vector2(1, 1));
-        ballPhysicFixture = body.createFixture(circle, 1);
+        circle.setRadius(8);
+        Fixture ballPhysicFixture = body.createFixture(circle, 1);
         ballPhysicFixture.setRestitution(2);
         ballPhysicFixture.setUserData(EntityDictionary.BALL);
         circle.dispose();
         body.setBullet(true);
     }
 
+    public void move(Vector2 vector2) {
+        body.setTransform(new Vector2(vector2.x, 38), 0);
+    }
+
     public Body getBody() {
         return body;
+    }
+
+    public Texture getTexture() {
+        return texture;
+    }
+
+    public Vector2 getPosition() {
+        return body.getPosition();
     }
 
 

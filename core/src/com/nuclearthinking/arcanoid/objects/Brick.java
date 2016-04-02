@@ -20,14 +20,12 @@ import static com.nuclearthinking.arcanoid.Vars.BRICK_WIDTH;
 public class Brick {
 
 
-    private final Resources resources;
     private final Texture texture;
-    Body body;
+    private Body body;
 
 
     public Brick(final BrickType brickType, Body body) {
         this.body = body;
-        resources = Resources.getInstance();
         texture = textureChooser(brickType);
         createBrickBody();
         body.setUserData(this);
@@ -45,21 +43,21 @@ public class Brick {
     private Texture textureChooser(final BrickType brickType) {
         switch (brickType) {
             case BRICK1:
-                return resources.getTexture("brick1");
+                return Resources.getInstance().getTexture("brick1");
             case BRICK2:
-                return resources.getTexture("brick2");
+                return Resources.getInstance().getTexture("brick2");
             case BRICK3:
-                return resources.getTexture("brick3");
+                return Resources.getInstance().getTexture("brick3");
             case BRICK4:
-                return resources.getTexture("brick4");
+                return Resources.getInstance().getTexture("brick4");
             case BRICK5:
-                return resources.getTexture("brick5");
+                return Resources.getInstance().getTexture("brick5");
             case BRICK6:
-                return resources.getTexture("brick6");
+                return Resources.getInstance().getTexture("brick6");
 
         }
 
-        return resources.getTexture("brick1");
+        return Resources.getInstance().getTexture("brick1");
     }
 
 
