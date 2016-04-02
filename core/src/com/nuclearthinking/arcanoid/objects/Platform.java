@@ -21,6 +21,8 @@ public class Platform {
         PolygonShape shape = new PolygonShape();
         shape.setAsBox(Vars.ARCANOID_WIDTH / 2, Vars.ARCANOID_HEIGHT / 2);
         fixture = body.createFixture(shape, 1);
+        fixture.setFriction(1);
+        fixture.setUserData("platform");
         shape.dispose();
     }
 

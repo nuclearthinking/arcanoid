@@ -4,6 +4,7 @@ import com.badlogic.gdx.physics.box2d.Contact;
 import com.badlogic.gdx.physics.box2d.ContactImpulse;
 import com.badlogic.gdx.physics.box2d.ContactListener;
 import com.badlogic.gdx.physics.box2d.Manifold;
+import com.nuclearthinking.arcanoid.objects.Brick;
 
 /**
  * Date: 27.03.2016
@@ -11,17 +12,21 @@ import com.badlogic.gdx.physics.box2d.Manifold;
  *
  * @author Vladislav Radchenko (onfient@gmail.com)
  */
-public class Contacts implements ContactListener {
+public class ContactsListener implements ContactListener {
 
 
     @Override
     public void beginContact(Contact contact) {
-        System.out.println("contact with somth");
+
+
     }
 
     @Override
     public void endContact(Contact contact) {
-
+        if (contact.getFixtureA().getBody().getUserData() instanceof Brick && contact.getFixtureB().getUserData() == EntityDictionary.BALL) {
+            System.out.println("THIS IS BRICK!");
+            DeleteQueue.add(contact.getFixtureA().getBody());
+        }
     }
 
     @Override
@@ -31,6 +36,5 @@ public class Contacts implements ContactListener {
 
     @Override
     public void postSolve(Contact contact, ContactImpulse impulse) {
-
     }
 }

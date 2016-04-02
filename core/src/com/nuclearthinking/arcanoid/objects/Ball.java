@@ -4,6 +4,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.CircleShape;
 import com.badlogic.gdx.physics.box2d.Fixture;
+import com.nuclearthinking.arcanoid.EntityDictionary;
 
 /**
  * Date: 26.03.2016
@@ -21,16 +22,14 @@ public class Ball {
         circle.setRadius(6);
         circle.setPosition(new Vector2(1, 1));
         ballPhysicFixture = body.createFixture(circle, 1);
+        ballPhysicFixture.setRestitution(2);
+        ballPhysicFixture.setUserData(EntityDictionary.BALL);
         circle.dispose();
         body.setBullet(true);
     }
 
     public Body getBody() {
         return body;
-    }
-
-    public Vector2 getPosition() {
-        return body.getPosition();
     }
 
 

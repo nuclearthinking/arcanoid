@@ -9,11 +9,9 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
-import com.badlogic.gdx.physics.box2d.*;
-import com.nuclearthinking.arcanoid.objects.Ball;
-import com.nuclearthinking.arcanoid.objects.Brick;
-import com.nuclearthinking.arcanoid.objects.Platform;
-import com.nuclearthinking.arcanoid.objects.Wall;
+import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
+import com.badlogic.gdx.physics.box2d.World;
+import com.nuclearthinking.arcanoid.objects.*;
 
 import java.util.List;
 
@@ -35,67 +33,34 @@ class GameScreen implements Screen {
     World world;
     Ball ball;
     Platform platform;
+    Border border;
     Box2DDebugRenderer box2DDebugRenderer = new Box2DDebugRenderer();
+    Controller controller;
 
     public GameScreen(final Arcanoid mainGame) {
-        world = new World(new Vector2(0, 0), true);
-        world.setContactListener(new Contacts());
 
+        world = new World(new Vector2(0, 0), true);
+        controller = new Controller(world);
+        world.setContactListener(new ContactsListener());
 
         this.mainGame = mainGame;
         resources = Resources.getInstance();
         backgroundColor = ColorPalette.BACKGROUND;
         camera = new OrthographicCamera();
         camera.setToOrtho(false, Vars.WIDTH, Vars.HEIGHT);
+
+        //TODO Создать VIEW для них
         ballTexsture = resources.getTexture("ball");
         topMenu = resources.getTexture("topmenu");
         arcanoid = resources.getTexture("arcanoid");
         arcanoidBody = resources.getRectangle("arcanoid");
         hearth = resources.getTexture("hearth");
+        gameWall = controller.getWall();
 
-        // ШАР
-        BodyDef bodyDef = new BodyDef();
-        bodyDef.type = BodyDef.BodyType.DynamicBody;
-        ball = new Ball(world.createBody(bodyDef));
+        //TODO Перенести в контроллер
         player = new Player();
-
-        //ПЛАТФОРМА
-        BodyDef bodyPlatform = new BodyDef();
-        bodyDef.type = BodyDef.BodyType.StaticBody;
-        platform = new Platform(world.createBody(bodyPlatform));
-
-
-        //ВЕРХНЕЕ МЕНЮ
-        BodyDef ceilingDef = new BodyDef();
-        ceilingDef.type = BodyDef.BodyType.StaticBody;
-        ceilingDef.position.set(Vars.WIDTH / 2, Vars.HEIGHT - (Vars.TOPMENU_HEIGHT / 2));
-        Body ceilingBody = world.createBody(ceilingDef);
-        PolygonShape shape = new PolygonShape();
-        shape.setAsBox(Vars.WIDTH / 2, Vars.TOPMENU_HEIGHT / 2);
-        Fixture ceilingFixture = ceilingBody.createFixture(shape, 1);
-        shape.dispose();
-
-
-        //ЛЕВАЯ ГРАНЬ
-        BodyDef leftWall = new BodyDef();
-        leftWall.type = BodyDef.BodyType.StaticBody;
-        leftWall.position.set(1, Vars.HEIGHT / 2);
-        Body leftWallBody = world.createBody(leftWall);
-        PolygonShape leftWallShape = new PolygonShape();
-        shape.setAsBox(1 / 2, Vars.HEIGHT / 2);
-        Fixture leftWallFixture = leftWallBody.createFixture(leftWallShape, 1);
-        leftWallShape.dispose();
-
-        //ПРАВАЯ ГРАНЬ
-        BodyDef rightWall = new BodyDef();
-        rightWall.type = BodyDef.BodyType.StaticBody;
-        rightWall.position.set(800, Vars.HEIGHT / 2);
-        Body rightWallBody = world.createBody(rightWall);
-        PolygonShape rightWallShape = new PolygonShape();
-        shape.setAsBox(1 / 2, Vars.HEIGHT / 2);
-        Fixture rightWallFixture = rightWallBody.createFixture(rightWallShape, 1);
-        rightWallShape.dispose();
-        gameWall = new Wall(Level.LEVEL2);
+        platform = controller.getPlatform();
+        ball = controller.getBall();
     }
 
     @Override
@@ -111,6 +76,7 @@ class GameScreen implements Screen {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         camera.update();
         mainGame.batch.setProjectionMatrix(camera.combined);
+        controller.update();
 
         mouseListener();
 
@@ -129,7 +95,7 @@ class GameScreen implements Screen {
 
         for (List<Brick> wallRow : gameWall.getWallArray()) {
             for (Brick brick : wallRow) {
-                mainGame.batch.draw(brick.getTexture(), brick.x(), brick.y());
+                mainGame.batch.draw(brick.getTexture(), brick.getPosition().x - 40, brick.getPosition().y - 10);
             }
         }
 
@@ -143,7 +109,9 @@ class GameScreen implements Screen {
             arcanoidBody.x = 800 - arcanoidBody.width;
         }
 
-        box2DDebugRenderer.render(world, camera.combined);
+        if (Vars.DEBUG) {
+            box2DDebugRenderer.render(world, camera.combined);
+        }
         world.step(Gdx.graphics.getDeltaTime(), 6, 2);
     }
 
