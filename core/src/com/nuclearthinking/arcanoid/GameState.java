@@ -9,6 +9,7 @@ package com.nuclearthinking.arcanoid;
 public class GameState {
 
     private int lifeAmount;
+    private int score;
 
 
     private static GameState ourInstance = new GameState();
@@ -32,5 +33,13 @@ public class GameState {
             System.out.println("Game Over");
         }
 
+    }
+
+    public void addPoints() {
+        score += 50;
+    }
+
+    public String getScoreString() {
+        return "score " + score;
     }
 }

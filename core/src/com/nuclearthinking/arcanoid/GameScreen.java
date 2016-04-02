@@ -92,7 +92,7 @@ class GameScreen implements Screen {
                 mainGame.batch.draw(brick.getTexture(), brick.getPosition().x - 40, brick.getPosition().y - 10);
             }
         }
-
+        FontFactory.getFont10().draw(mainGame.batch, GameState.getInstance().getScoreString(), 20, 445);
         mainGame.batch.end();
 
         if (Vars.DEBUG) {
