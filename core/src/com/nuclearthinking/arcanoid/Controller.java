@@ -7,6 +7,8 @@ import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.World;
 import com.nuclearthinking.arcanoid.objects.*;
 
+import static com.nuclearthinking.arcanoid.Vars.PPM;
+
 /**
  * Date: 02.04.2016
  * Time: 10:49
@@ -57,8 +59,10 @@ public class Controller {
 
     private void mouseListener() {
         Vector2 touchPos = new Vector2();
-        touchPos.set(Gdx.input.getX(), Gdx.input.getY());
+        touchPos.set((float) Gdx.input.getX() / PPM, (float) Gdx.input.getY() / PPM);
+
         platform.move(touchPos);
+
         if (!mouseClicked) {
             ball.move(platform.getPosition());
         }
@@ -66,14 +70,14 @@ public class Controller {
         if (Gdx.input.justTouched()) {
             if (!mouseClicked) {
                 System.out.println("mouse clicked");
-                ball.getBody().setLinearVelocity(0, 200);
+                ball.getBody().setLinearVelocity(0f, 1.1f);
                 mouseClicked = true;
             }
         }
     }
 
     private void isDead() {
-        int ballY = (int) ball.getPosition().y;
+        float ballY = ball.getPosition().y / PPM;
         if (ballY <= 0) {
             System.out.println("Lose one life");
             GameState.getInstance().loseLife();
@@ -115,15 +119,21 @@ public class Controller {
         this.wall = wall;
     }
 
-    private final BodyDef dynamicBody() {
+    private BodyDef dynamicBody() {
         BodyDef bodyDef = new BodyDef();
         bodyDef.type = BodyDef.BodyType.DynamicBody;
         return bodyDef;
     }
 
-    private final BodyDef staticBody() {
+    private BodyDef staticBody() {
         BodyDef bodyDef = new BodyDef();
         bodyDef.type = BodyDef.BodyType.StaticBody;
+        return bodyDef;
+    }
+
+    private BodyDef kinematicBody() {
+        BodyDef bodyDef = new BodyDef();
+        bodyDef.type = BodyDef.BodyType.KinematicBody;
         return bodyDef;
     }
 }

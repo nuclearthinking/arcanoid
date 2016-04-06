@@ -6,7 +6,7 @@ import com.nuclearthinking.arcanoid.BrickType;
 
 import java.util.ArrayList;
 import java.util.List;
-
+import static com.nuclearthinking.arcanoid.Vars.PPM;
 /**
  * Date: 20.03.2016
  * Time: 21:01
@@ -33,7 +33,7 @@ public class Wall {
             for (int o = 0; o < levelMap[0].length; o++) {
                 BodyDef bodyDef = new BodyDef();
                 bodyDef.type = BodyDef.BodyType.StaticBody;
-                bodyDef.position.set(x + 40, y + 10);
+                bodyDef.position.set((x + 40)/PPM, (y + 10)/PPM);
                 Brick brick = new Brick(BrickType.byId(aLevelMap[o]), world.createBody(bodyDef));
                 bricks.add(brick);
                 x += 80;
