@@ -21,8 +21,8 @@ public final class Vars {
     public static final int BANNER_HEIGHT = 62;
     public static final int PLAY_BUTTON_WIDTH = 199;
     public static final int PLAY_BUTTON_HEIGHT = 63;
-    public static final int PPM = 100;
+    public static final float PPM = 100;
     public static final int BRICK_WIDTH = 80;
     public static final int BRICK_HEIGHT = 20;
-    public static final boolean DEBUG = false;
+    public static final boolean DEBUG = true;
 }

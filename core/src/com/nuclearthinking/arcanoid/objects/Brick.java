@@ -8,8 +8,7 @@ import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.nuclearthinking.arcanoid.BrickType;
 import com.nuclearthinking.arcanoid.Resources;
 
-import static com.nuclearthinking.arcanoid.Vars.BRICK_HEIGHT;
-import static com.nuclearthinking.arcanoid.Vars.BRICK_WIDTH;
+import static com.nuclearthinking.arcanoid.Vars.*;
 
 /**
  * Date: 20.03.2016
@@ -33,9 +32,9 @@ public class Brick {
 
     private void createBrickBody() {
         PolygonShape shape = new PolygonShape();
-        shape.setAsBox(BRICK_WIDTH / 2, BRICK_HEIGHT / 2);
-        Fixture brickFixture = body.createFixture(shape, 1);
-        brickFixture.setFriction(1);
+        shape.setAsBox((BRICK_WIDTH / 2) / PPM, (BRICK_HEIGHT / 2) / PPM);
+        Fixture brickFixture = body.createFixture(shape, 0);
+        brickFixture.setFriction(1f);
         shape.dispose();
     }
 

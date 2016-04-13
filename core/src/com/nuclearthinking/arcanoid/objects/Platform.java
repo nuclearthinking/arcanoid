@@ -8,6 +8,8 @@ import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.nuclearthinking.arcanoid.Resources;
 import com.nuclearthinking.arcanoid.Vars;
 
+import static com.nuclearthinking.arcanoid.Vars.PPM;
+
 /**
  * Date: 26.03.2016
  * Time: 22:45
@@ -24,9 +26,9 @@ public class Platform {
         texture = Resources.getInstance().getTexture("arcanoid");
 
         PolygonShape shape = new PolygonShape();
-        shape.setAsBox(Vars.ARCANOID_WIDTH / 2, Vars.ARCANOID_HEIGHT / 2);
-        Fixture fixture = body.createFixture(shape, 1);
-        fixture.setFriction(1);
+        shape.setAsBox((Vars.ARCANOID_WIDTH / 2) / PPM, (Vars.ARCANOID_HEIGHT / 2) / PPM);
+        Fixture fixture = body.createFixture(shape, 0);
+        fixture.setFriction(1f);
         shape.dispose();
         body.setUserData(this);
     }
@@ -45,14 +47,14 @@ public class Platform {
 
     public void move(Vector2 vector2) {
         int y = 20;
-        if (vector2.x > Vars.ARCANOID_WIDTH / 2 && vector2.x < Vars.WIDTH - Vars.ARCANOID_WIDTH / 2) {
-            body.setTransform(vector2.x, y, 0);
+        if (vector2.x > (Vars.ARCANOID_WIDTH / 2) / PPM && vector2.x < (Vars.WIDTH - Vars.ARCANOID_WIDTH / 2) / PPM) {
+            body.setTransform(vector2.x, y / PPM, 0);
         } else {
-            if (vector2.x < Vars.ARCANOID_WIDTH / 2) {
-                body.setTransform(new Vector2(Vars.ARCANOID_WIDTH / 2, y), 0);
+            if (vector2.x < (Vars.ARCANOID_WIDTH / 2) / PPM) {
+                body.setTransform(new Vector2((Vars.ARCANOID_WIDTH / 2) / PPM, y / PPM), 0);
             } else {
-                if (vector2.x > Vars.WIDTH - Vars.ARCANOID_WIDTH / 2) {
-                    body.setTransform(new Vector2(Vars.WIDTH - Vars.ARCANOID_WIDTH / 2, y), 0);
+                if (vector2.x > (Vars.WIDTH - Vars.ARCANOID_WIDTH / 2) / PPM) {
+                    body.setTransform(new Vector2((Vars.WIDTH - Vars.ARCANOID_WIDTH / 2) / PPM, y / PPM), 0);
                 }
             }
         }

@@ -8,6 +8,8 @@ import com.badlogic.gdx.physics.box2d.Fixture;
 import com.nuclearthinking.arcanoid.EntityDictionary;
 import com.nuclearthinking.arcanoid.Resources;
 
+import static com.nuclearthinking.arcanoid.Vars.PPM;
+
 /**
  * Date: 26.03.2016
  * Time: 22:45
@@ -23,16 +25,17 @@ public class Ball {
         texture = Resources.getInstance().getTexture("ball");
 
         CircleShape circle = new CircleShape();
-        circle.setRadius(8);
-        Fixture ballPhysicFixture = body.createFixture(circle, 1);
-        ballPhysicFixture.setRestitution(2);
+        circle.setRadius(8 / PPM);
+        Fixture ballPhysicFixture = body.createFixture(circle, 10f);
+        ballPhysicFixture.setRestitution(1f);
+        ballPhysicFixture.setFriction(1f);
         ballPhysicFixture.setUserData(EntityDictionary.BALL);
         circle.dispose();
-        body.setBullet(true);
+
     }
 
     public void move(Vector2 vector2) {
-        body.setTransform(new Vector2(vector2.x, 38), 0);
+        body.setTransform(new Vector2(vector2.x, 38 / PPM), 0);
     }
 
     public Body getBody() {

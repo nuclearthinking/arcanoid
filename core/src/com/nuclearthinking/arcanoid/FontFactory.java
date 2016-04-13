@@ -18,7 +18,7 @@ public class FontFactory {
     public static BitmapFont getFont10() {
         if (font10 == null) {
             FreeTypeFontGenerator.FreeTypeFontParameter parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
-            parameter.size = 10;
+            parameter.size = 9;
             generateFont8(parameter);
         }
         return font10;
