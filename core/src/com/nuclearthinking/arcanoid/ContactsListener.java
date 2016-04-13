@@ -5,6 +5,9 @@ import com.badlogic.gdx.physics.box2d.ContactImpulse;
 import com.badlogic.gdx.physics.box2d.ContactListener;
 import com.badlogic.gdx.physics.box2d.Manifold;
 import com.nuclearthinking.arcanoid.objects.Brick;
+import com.nuclearthinking.arcanoid.objects.Platform;
+
+import java.util.Arrays;
 
 /**
  * Date: 27.03.2016
@@ -26,6 +29,18 @@ public class ContactsListener implements ContactListener {
         if (contact.getFixtureA().getBody().getUserData() instanceof Brick && contact.getFixtureB().getUserData() == EntityDictionary.BALL) {
             DeleteQueue.add(contact.getFixtureA().getBody());
         }
+        if (contact.getFixtureA().getUserData() == EntityDictionary.BALL || contact.getFixtureB().getUserData() == EntityDictionary.BALL) {
+            if (contact.getFixtureA().getUserData() == EntityDictionary.BALL) {
+            }
+        }
+
+        if (contact.getFixtureA().getUserData() instanceof Platform && contact.getFixtureB().getUserData() == EntityDictionary.BALL) {
+
+        }
+
+        if (contact.getFixtureA().getUserData() == EntityDictionary.BALL && contact.getFixtureB().getUserData() instanceof Platform) {
+
+        }
     }
 
     @Override
@@ -35,5 +50,8 @@ public class ContactsListener implements ContactListener {
 
     @Override
     public void postSolve(Contact contact, ContactImpulse impulse) {
+        System.out.println(contact.getTangentSpeed());
+        System.out.println(contact.getRestitution());
+        System.out.println(Arrays.toString(contact.getWorldManifold().getSeparations()));
     }
 }

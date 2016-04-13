@@ -10,8 +10,11 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.World;
 import com.nuclearthinking.arcanoid.objects.Ball;
+import com.nuclearthinking.arcanoid.objects.Brick;
 import com.nuclearthinking.arcanoid.objects.Platform;
 import com.nuclearthinking.arcanoid.objects.Wall;
+
+import java.util.List;
 
 import static com.nuclearthinking.arcanoid.Vars.PPM;
 
@@ -25,7 +28,7 @@ public class GameScreen implements Screen {
     private final Arcanoid mainGame;
     private final Resources resources;
     private final Color backgroundColor;
-    private OrthographicCamera camera;
+    private OrthographicCamera camera, visual;
     private final Texture topMenu, arcanoid, hearth, ballTexture;
     private final Wall gameWall;
     World world;
@@ -53,7 +56,9 @@ public class GameScreen implements Screen {
         //TODO Перенести в контроллер
         platform = controller.getPlatform();
         ball = controller.getBall();
+        visual = new OrthographicCamera();
         camera = new OrthographicCamera();
+        visual.setToOrtho(false, Vars.WIDTH, Vars.HEIGHT);
         camera.setToOrtho(false, Vars.WIDTH / PPM, Vars.HEIGHT / PPM);
     }
 
@@ -65,39 +70,38 @@ public class GameScreen implements Screen {
     @Override
     public void render(float delta) {
 
-//        int hearthXPos = Vars.WIDTH - (16 + 5);
-//        Gdx.gl.glClearColor(backgroundColor.r, backgroundColor.g, backgroundColor.b, 1);
-        Gdx.gl.glClearColor(0, 0, 0, 1);
+        int hearthXPos = Vars.WIDTH - (16 + 5);
+        Gdx.gl.glClearColor(backgroundColor.r, backgroundColor.g, backgroundColor.b, 1);
+
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-
-//        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         controller.update();
-//        camera.update();
+        visual.update();
+        camera.update();
 
-        /*
-        mainGame.batch.setProjectionMatrix(camera.combined);
+        mainGame.batch.setProjectionMatrix(visual.combined);
         mainGame.batch.begin();
-        mainGame.batch.draw(ballTexture, ball.getBody().getPosition().x - 16 / 2, ball.getBody().getPosition().y - 16 / 2);
+        mainGame.batch.draw(ballTexture, (ball.getBody().getPosition().x - (16 / PPM) / 2) * PPM, (ball.getBody().getPosition().y - (16 / PPM) / 2) * PPM);
         mainGame.batch.draw(topMenu, 0, Vars.HEIGHT - Vars.TOPMENU_HEIGHT);
-        mainGame.batch.draw(arcanoid, platform.getPosition().x - Vars.ARCANOID_WIDTH / 2, platform.getPosition().y - Vars.ARCANOID_HEIGHT / 2);
+        mainGame.batch.draw(arcanoid, (platform.getPosition().x - (Vars.ARCANOID_WIDTH / PPM) / 2) * PPM, (platform.getPosition().y - (Vars.ARCANOID_HEIGHT / PPM) / 2) * PPM);
+
         for (int i = 0; i < GameState.getInstance().getLifeAmount(); i++) {
             mainGame.batch.draw(hearth, hearthXPos, Vars.HEIGHT - 25);
             hearthXPos -= 20;
         }
         for (List<Brick> wallRow : gameWall.getWallArray()) {
             for (Brick brick : wallRow) {
-                mainGame.batch.draw(brick.getTexture(), brick.getPosition().x - 40, brick.getPosition().y - 10);
+                mainGame.batch.draw(brick.getTexture(), (brick.getPosition().x - 40f / PPM) * PPM, (brick.getPosition().y - 10f / PPM) * PPM);
             }
         }
         FontFactory.getFont10().draw(mainGame.batch, GameState.getInstance().getScoreString(), 20, 445);
+        FontFactory.getFont10().draw(mainGame.batch, "x = " + ball.getBody().getLinearVelocity().x * PPM + " y = " + ball.getBody().getLinearVelocity().y * PPM, 20, 20);
         mainGame.batch.end();
-        */
 
-//        if (Vars.DEBUG) {
-        world.step(Gdx.graphics.getDeltaTime(), 6, 2);
+        world.step(Gdx.graphics.getDeltaTime(), 8, 3);
 
-        box2DDebugRenderer.render(world, camera.combined);
-//        }
+        if (Vars.DEBUG) {
+            box2DDebugRenderer.render(world, camera.combined);
+        }
     }
 
 

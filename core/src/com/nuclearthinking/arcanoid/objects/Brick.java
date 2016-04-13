@@ -35,7 +35,6 @@ public class Brick {
         shape.setAsBox((BRICK_WIDTH / 2) / PPM, (BRICK_HEIGHT / 2) / PPM);
         Fixture brickFixture = body.createFixture(shape, 0);
         brickFixture.setFriction(1f);
-        brickFixture.setRestitution(1.05f);
         shape.dispose();
     }
 

@@ -1,6 +1,7 @@
 package com.nuclearthinking.arcanoid;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
@@ -36,13 +37,16 @@ public class Controller {
     final void prepareController() {
         world.setContactListener(new ContactsListener());
         ball = new Ball(world.createBody(dynamicBody()));
-        platform = new Platform(world.createBody(staticBody()));
+        ball.getBody().setLinearDamping(0);
+        ball.getBody().setAngularDamping(0);
+        platform = new Platform(world.createBody(kinematicBody()));
         border = new Border(world.createBody(staticBody()));
         wall = new Wall(Level.LEVEL2, world);
     }
 
     public final void update() {
         mouseListener();
+        keyBoardListener();
         world.step(Gdx.graphics.getDeltaTime(), 6, 2);
         isDead();
         executeCleaning();
@@ -53,6 +57,7 @@ public class Controller {
             Brick brick = (Brick) body.getUserData();
             wall.destroy(brick);
             world.destroyBody(body);
+            GameState.getInstance().addPoints();
         }
         DeleteQueue.clear();
     }
@@ -63,15 +68,18 @@ public class Controller {
 
         platform.move(touchPos);
 
+
         if (!mouseClicked) {
             ball.move(platform.getPosition());
         }
 
         if (Gdx.input.justTouched()) {
             if (!mouseClicked) {
+                ball.getBody().setActive(true);
                 System.out.println("mouse clicked");
-                ball.getBody().setLinearVelocity(0f, 1.1f);
+                ball.getBody().applyLinearImpulse(0f, 0.3f, ball.getPosition().x, ball.getPosition().y, true);
                 mouseClicked = true;
+
             }
         }
     }
@@ -82,8 +90,35 @@ public class Controller {
             System.out.println("Lose one life");
             GameState.getInstance().loseLife();
             mouseClicked = false;
+            ball.getBody().setLinearVelocity(0, 0);
+            ball.getBody().setActive(false);
         }
 
+    }
+
+    void keyBoardListener() {
+        if (Gdx.input.isKeyPressed(com.badlogic.gdx.Input.Keys.E)) {
+            ball.getBody().setLinearVelocity(0, 0);
+            ball.getBody().setActive(false);
+            mouseClicked = false;
+        }
+        if (Gdx.input.isKeyJustPressed(Input.Keys.F)) {
+            System.out.println("F pressed");
+            System.out.println("Mass = " + ball.getBody().getMass());
+            System.out.println("Velocity = " + ball.getBody().getLinearVelocity());
+        }
+
+        if (Gdx.input.isKeyPressed(Input.Keys.A)) {
+            float speed = platform.getBody().getLinearVelocity().x;
+            speed -= 5;
+            platform.getBody().setLinearVelocity(speed, 0);
+        }
+
+        if (Gdx.input.isKeyPressed(Input.Keys.D)) {
+            float speed = platform.getBody().getLinearVelocity().x;
+            speed += 5;
+            platform.getBody().setLinearVelocity(speed, 0);
+        }
     }
 
 

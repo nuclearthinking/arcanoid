@@ -26,11 +26,10 @@ public class Ball {
 
         CircleShape circle = new CircleShape();
         circle.setRadius(8 / PPM);
-        Fixture ballPhysicFixture = body.createFixture(circle, 300);
-        ballPhysicFixture.setRestitution(1.05f);
-        ballPhysicFixture.setFriction(10f);
+        Fixture ballPhysicFixture = body.createFixture(circle, 10f);
+        ballPhysicFixture.setRestitution(1f);
+        ballPhysicFixture.setFriction(1f);
         ballPhysicFixture.setUserData(EntityDictionary.BALL);
-
         circle.dispose();
 
     }
