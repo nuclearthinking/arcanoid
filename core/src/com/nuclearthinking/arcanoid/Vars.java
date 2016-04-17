@@ -24,5 +24,5 @@ public final class Vars {
     public static final float PPM = 100;
     public static final int BRICK_WIDTH = 80;
     public static final int BRICK_HEIGHT = 20;
-    public static final boolean DEBUG = false;
+    public static final boolean DEBUG = true;
 }
