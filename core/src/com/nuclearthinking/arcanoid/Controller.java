@@ -18,8 +18,7 @@ import static com.nuclearthinking.arcanoid.Vars.PPM;
  */
 public class Controller {
 
-    private DeleteQueue deleteQueue;
-    private GameState gameState;
+    DeleteQueue deleteQueue;
     private World world;
     private Ball ball;
     private Platform platform;
@@ -39,7 +38,7 @@ public class Controller {
         ball = new Ball(world.createBody(dynamicBody()));
         ball.getBody().setLinearDamping(0);
         ball.getBody().setAngularDamping(0);
-        platform = new Platform(world.createBody(kinematicBody()));
+        platform = new Platform(world);
         border = new Border(world.createBody(staticBody()));
         wall = new Wall(Level.LEVEL2, world);
     }
@@ -47,7 +46,6 @@ public class Controller {
     public final void update() {
         mouseListener();
         keyBoardListener();
-        world.step(Gdx.graphics.getDeltaTime(), 6, 2);
         isDead();
         executeCleaning();
     }
@@ -77,7 +75,7 @@ public class Controller {
             if (!mouseClicked) {
                 ball.getBody().setActive(true);
                 System.out.println("mouse clicked");
-                ball.getBody().applyLinearImpulse(0f, 0.3f, ball.getPosition().x, ball.getPosition().y, true);
+                ball.getBody().applyLinearImpulse(0f, 0.6f, ball.getPosition().x, ball.getPosition().y, true);
                 mouseClicked = true;
 
             }
@@ -108,16 +106,14 @@ public class Controller {
             System.out.println("Velocity = " + ball.getBody().getLinearVelocity());
         }
 
-        if (Gdx.input.isKeyPressed(Input.Keys.A)) {
-            float speed = platform.getBody().getLinearVelocity().x;
-            speed -= 5;
-            platform.getBody().setLinearVelocity(speed, 0);
+        if (Gdx.input.isKeyJustPressed(Input.Keys.A)) {
+            platform.getPlatformBody().applyLinearImpulse(1f, 0, platform.getPlatformBody().getPosition().x, platform.getPlatformBody().getPosition().y, true);
+            platform.getPlatformBody().applyForce(new Vector2(1f, 0), platform.getPosition(), true);
         }
 
-        if (Gdx.input.isKeyPressed(Input.Keys.D)) {
-            float speed = platform.getBody().getLinearVelocity().x;
-            speed += 5;
-            platform.getBody().setLinearVelocity(speed, 0);
+        if (Gdx.input.isKeyJustPressed(Input.Keys.D)) {
+            platform.getPlatformBody().applyLinearImpulse(-1f, 0, platform.getPlatformBody().getPosition().x, platform.getPlatformBody().getPosition().y, true);
+            platform.getPlatformBody().applyForce(new Vector2(-1f, 0), platform.getPosition(), true);
         }
     }
 
