@@ -29,7 +29,7 @@ public class GameScreen implements Screen {
     private final Resources resources;
     private final Color backgroundColor;
     private OrthographicCamera camera, visual;
-    private final Texture topMenu, arcanoid, hearth, ballTexture;
+    private final Texture topMenu, hearth, ballTexture;
     private final Wall gameWall;
     World world;
     Ball ball;
@@ -40,6 +40,7 @@ public class GameScreen implements Screen {
     public GameScreen(final Arcanoid mainGame) {
         this.mainGame = mainGame;
         world = new World(new Vector2(0, 0), true);
+        World.setVelocityThreshold(0.5f);
         controller = new Controller(world);
         world.setContactListener(new ContactsListener());
         resources = Resources.getInstance();
@@ -49,7 +50,6 @@ public class GameScreen implements Screen {
         //TODO Создать VIEW для них
         ballTexture = resources.getTexture("ball");
         topMenu = resources.getTexture("topmenu");
-        arcanoid = resources.getTexture("arcanoid");
         hearth = resources.getTexture("hearth");
         gameWall = controller.getWall();
 
@@ -82,7 +82,7 @@ public class GameScreen implements Screen {
         mainGame.batch.begin();
         mainGame.batch.draw(ballTexture, (ball.getBody().getPosition().x - (16 / PPM) / 2) * PPM, (ball.getBody().getPosition().y - (16 / PPM) / 2) * PPM);
         mainGame.batch.draw(topMenu, 0, Vars.HEIGHT - Vars.TOPMENU_HEIGHT);
-        mainGame.batch.draw(arcanoid, (platform.getPosition().x - (Vars.ARCANOID_WIDTH / PPM) / 2) * PPM, (platform.getPosition().y - (Vars.ARCANOID_HEIGHT / PPM) / 2) * PPM);
+        mainGame.batch.draw(platform.getTexture(), (platform.getPosition().x - (Vars.ARCANOID_WIDTH / PPM) / 2) * PPM, (platform.getPosition().y - (Vars.ARCANOID_HEIGHT / PPM) / 2) * PPM);
 
         for (int i = 0; i < GameState.getInstance().getLifeAmount(); i++) {
             mainGame.batch.draw(hearth, hearthXPos, Vars.HEIGHT - 25);
@@ -94,7 +94,6 @@ public class GameScreen implements Screen {
             }
         }
         FontFactory.getFont10().draw(mainGame.batch, GameState.getInstance().getScoreString(), 20, 445);
-        FontFactory.getFont10().draw(mainGame.batch, "x = " + ball.getBody().getLinearVelocity().x * PPM + " y = " + ball.getBody().getLinearVelocity().y * PPM, 20, 20);
         mainGame.batch.end();
 
         world.step(Gdx.graphics.getDeltaTime(), 8, 3);

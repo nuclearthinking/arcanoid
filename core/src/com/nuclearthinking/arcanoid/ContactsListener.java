@@ -7,8 +7,6 @@ import com.badlogic.gdx.physics.box2d.Manifold;
 import com.nuclearthinking.arcanoid.objects.Brick;
 import com.nuclearthinking.arcanoid.objects.Platform;
 
-import java.util.Arrays;
-
 /**
  * Date: 27.03.2016
  * Time: 19:21
@@ -50,8 +48,5 @@ public class ContactsListener implements ContactListener {
 
     @Override
     public void postSolve(Contact contact, ContactImpulse impulse) {
-        System.out.println(contact.getTangentSpeed());
-        System.out.println(contact.getRestitution());
-        System.out.println(Arrays.toString(contact.getWorldManifold().getSeparations()));
     }
 }
