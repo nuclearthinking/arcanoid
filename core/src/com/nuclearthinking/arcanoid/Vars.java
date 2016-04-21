@@ -25,4 +25,6 @@ public final class Vars {
     public static final int BRICK_WIDTH = 80;
     public static final int BRICK_HEIGHT = 20;
     public static final boolean DEBUG = true;
+    public static final float BALL_MAX_SPEED = 5.0f;
+    public static final float BALL_MIN_SPEED = 3.0f;
 }

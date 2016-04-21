@@ -54,7 +54,7 @@ public class Platform {
         PolygonShape shape = new PolygonShape();
         shape.setAsBox((Vars.ARCANOID_WIDTH / 2) / PPM, (Vars.ARCANOID_HEIGHT / 2) / PPM);
         Fixture fixture = body.createFixture(shape, 0);
-        fixture.setFriction(1f);
+        fixture.setFriction(10f);
         shape.dispose();
     }
 
