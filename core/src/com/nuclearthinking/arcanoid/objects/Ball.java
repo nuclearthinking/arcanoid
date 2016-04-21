@@ -30,6 +30,8 @@ public class Ball {
         ballPhysicFixture.setRestitution(1f);
         ballPhysicFixture.setFriction(1f);
         ballPhysicFixture.setUserData(EntityDictionary.BALL);
+        body.setLinearDamping(0);
+        body.setAngularDamping(0);
         circle.dispose();
 
     }
@@ -37,6 +39,8 @@ public class Ball {
     public void move(Vector2 vector2) {
         body.setTransform(new Vector2(vector2.x, 38 / PPM), 0);
     }
+
+
 
     public Body getBody() {
         return body;

@@ -1,14 +1,13 @@
 package com.nuclearthinking.arcanoid;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.World;
 import com.nuclearthinking.arcanoid.objects.*;
 
-import static com.nuclearthinking.arcanoid.Vars.PPM;
+import static com.nuclearthinking.arcanoid.Vars.*;
 
 /**
  * Date: 02.04.2016
@@ -36,8 +35,7 @@ public class Controller {
     final void prepareController() {
         world.setContactListener(new ContactsListener());
         ball = new Ball(world.createBody(dynamicBody()));
-        ball.getBody().setLinearDamping(0);
-        ball.getBody().setAngularDamping(0);
+        ball.getBody().setActive(false);
         platform = new Platform(world);
         border = new Border(world.createBody(staticBody()));
         wall = new Wall(Level.LEVEL2, world);
@@ -47,6 +45,7 @@ public class Controller {
         mouseListener();
         keyBoardListener();
         isDead();
+        speedAcceleration();
         executeCleaning();
     }
 
@@ -60,17 +59,37 @@ public class Controller {
         DeleteQueue.clear();
     }
 
+    public void speedAcceleration() {
+        Vector2 speed = ball.getBody().getLinearVelocity();
+        float oldSpeed = Math.abs(speed.x) + Math.abs(speed.y);
+
+        float maxSpeed = BALL_MAX_SPEED;
+        float minSpeed = BALL_MIN_SPEED;
+        if (ball.getBody().isActive()) {
+            if (oldSpeed < minSpeed) {
+                speed.x = speed.x * 1.05f;
+                speed.y = speed.y * 1.05f;
+                System.out.println("Speed = " + speed.toString());
+                System.out.println("Accelerating");
+            }
+
+            if (oldSpeed > maxSpeed) {
+                speed.x = speed.x * 0.95f;
+                speed.y = speed.y * 0.95f;
+                System.out.println("Speed = " + speed.toString());
+                System.out.println("Slowing");
+            }
+            ball.getBody().setLinearVelocity(speed);
+        }
+    }
+
     private void mouseListener() {
         Vector2 touchPos = new Vector2();
         touchPos.set((float) Gdx.input.getX() / PPM, (float) Gdx.input.getY() / PPM);
-
         platform.move(touchPos);
-
-
         if (!mouseClicked) {
             ball.move(platform.getPosition());
         }
-
         if (Gdx.input.justTouched()) {
             if (!mouseClicked) {
                 ball.getBody().setActive(true);
@@ -100,21 +119,6 @@ public class Controller {
             ball.getBody().setActive(false);
             mouseClicked = false;
         }
-        if (Gdx.input.isKeyJustPressed(Input.Keys.F)) {
-            System.out.println("F pressed");
-            System.out.println("Mass = " + ball.getBody().getMass());
-            System.out.println("Velocity = " + ball.getBody().getLinearVelocity());
-        }
-
-        if (Gdx.input.isKeyJustPressed(Input.Keys.A)) {
-            platform.getPlatformBody().applyLinearImpulse(1f, 0, platform.getPlatformBody().getPosition().x, platform.getPlatformBody().getPosition().y, true);
-            platform.getPlatformBody().applyForce(new Vector2(1f, 0), platform.getPosition(), true);
-        }
-
-        if (Gdx.input.isKeyJustPressed(Input.Keys.D)) {
-            platform.getPlatformBody().applyLinearImpulse(-1f, 0, platform.getPlatformBody().getPosition().x, platform.getPlatformBody().getPosition().y, true);
-            platform.getPlatformBody().applyForce(new Vector2(-1f, 0), platform.getPosition(), true);
-        }
     }
 
 
@@ -122,33 +126,21 @@ public class Controller {
         return ball;
     }
 
-    public void setBall(Ball ball) {
-        this.ball = ball;
-    }
 
     public Platform getPlatform() {
         return platform;
     }
 
-    public void setPlatform(Platform platform) {
-        this.platform = platform;
-    }
 
     public Border getBorder() {
         return border;
     }
 
-    public void setBorder(Border border) {
-        this.border = border;
-    }
 
     public Wall getWall() {
         return wall;
     }
 
-    public void setWall(Wall wall) {
-        this.wall = wall;
-    }
 
     private BodyDef dynamicBody() {
         BodyDef bodyDef = new BodyDef();
