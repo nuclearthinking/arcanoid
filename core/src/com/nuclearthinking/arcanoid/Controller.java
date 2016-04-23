@@ -34,14 +34,6 @@ public class Controller {
         prepareController();
     }
 
-    public World getWorld() {
-        return world;
-    }
-
-    public SpriteBatch getSpriteBatch() {
-        return spriteBatch;
-    }
-
     final void prepareController() {
         world.setContactListener(new ContactsListener());
         ball = new Ball(this);
@@ -130,24 +122,10 @@ public class Controller {
         }
     }
 
-
-    public Ball getBall() {
-        return ball;
-    }
-
-
-    public Platform getPlatform() {
-        return platform;
-    }
-
-
-    public Border getBorder() {
-        return border;
-    }
-
-
-    public Wall getWall() {
-        return wall;
+    private BodyDef kinematicBody() {
+        BodyDef bodyDef = new BodyDef();
+        bodyDef.type = BodyDef.BodyType.KinematicBody;
+        return bodyDef;
     }
 
 
@@ -163,9 +141,25 @@ public class Controller {
         return bodyDef;
     }
 
-    private BodyDef kinematicBody() {
-        BodyDef bodyDef = new BodyDef();
-        bodyDef.type = BodyDef.BodyType.KinematicBody;
-        return bodyDef;
+
+    public Ball getBall() {
+        return ball;
+    }
+
+
+    public Platform getPlatform() {
+        return platform;
+    }
+
+    public Wall getWall() {
+        return wall;
+    }
+
+    public World getWorld() {
+        return world;
+    }
+
+    public SpriteBatch getSpriteBatch() {
+        return spriteBatch;
     }
 }

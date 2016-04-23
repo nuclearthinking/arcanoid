@@ -9,10 +9,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.World;
-import com.nuclearthinking.arcanoid.objects.Ball;
-import com.nuclearthinking.arcanoid.objects.Brick;
-import com.nuclearthinking.arcanoid.objects.Platform;
-import com.nuclearthinking.arcanoid.objects.Wall;
+import com.nuclearthinking.arcanoid.objects.*;
 
 import java.util.List;
 
@@ -29,13 +26,13 @@ public class GameScreen implements Screen {
     private final Resources resources;
     private final Color backgroundColor;
     private OrthographicCamera camera, visual;
-    private final Texture topMenu, hearth, ballTexture;
     private final Wall gameWall;
     World world;
     Ball ball;
     Platform platform;
     Box2DDebugRenderer box2DDebugRenderer = new Box2DDebugRenderer();
     Controller controller;
+    TopMenu topMenu;
 
     public GameScreen(final Arcanoid mainGame) {
         this.mainGame = mainGame;
@@ -45,12 +42,10 @@ public class GameScreen implements Screen {
         world.setContactListener(new ContactsListener());
         resources = Resources.getInstance();
         backgroundColor = ColorPalette.BACKGROUND;
+        topMenu = new TopMenu(mainGame.batch);
 
 
         //TODO Создать VIEW для них
-        ballTexture = resources.getTexture("ball");
-        topMenu = resources.getTexture("topmenu");
-        hearth = resources.getTexture("hearth");
         gameWall = controller.getWall();
 
         //TODO Перенести в контроллер
@@ -69,12 +64,10 @@ public class GameScreen implements Screen {
 
     @Override
     public void render(float delta) {
-        controller.update();
-
-        int hearthXPos = Vars.WIDTH - (16 + 5);
         Gdx.gl.glClearColor(backgroundColor.r, backgroundColor.g, backgroundColor.b, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
+        controller.update();
         visual.update();
         camera.update();
         mainGame.batch.setProjectionMatrix(visual.combined);
@@ -82,21 +75,15 @@ public class GameScreen implements Screen {
         mainGame.batch.begin();
         //#####START RENDERING
 
-
-        mainGame.batch.draw(topMenu, 0, Vars.HEIGHT - Vars.TOPMENU_HEIGHT);
+        topMenu.render();
         ball.render();
         platform.render();
-        for (int i = 0; i < GameState.getInstance().getLifeAmount(); i++) {
-            mainGame.batch.draw(hearth, hearthXPos, Vars.HEIGHT - 25);
-            hearthXPos -= 20;
-        }
+
         for (List<Brick> wallRow : gameWall.getWallArray()) {
             for (Brick brick : wallRow) {
                 mainGame.batch.draw(brick.getTexture(), (brick.getPosition().x - 40f / PPM) * PPM, (brick.getPosition().y - 10f / PPM) * PPM);
             }
         }
-        FontFactory.getFont9().draw(mainGame.batch, GameState.getInstance().getScoreString(), 20, 445);
-
 
 
         //#####END RENDERING#####
