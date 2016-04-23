@@ -9,24 +9,10 @@ public class Arcanoid extends Game {
 
     SpriteBatch batch;
     private BitmapFont font;
-    private Resources resources;
 
     @Override
     public final void create() {
-        resources = Resources.getInstance();
-        resources.loadTexture("arcanoid", "arcanoid.png");
-        resources.loadTexture("hearth", "hearth.png");
-        resources.loadTexture("playbutton", "playbutton.png");
-        resources.loadTexture("banner", "banner.png");
-        resources.loadTexture("border", "border.png");
-        resources.loadTexture("brick1", "brick1.png");
-        resources.loadTexture("brick2", "brick2.png");
-        resources.loadTexture("brick3", "brick3.png");
-        resources.loadTexture("brick4", "brick4.png");
-        resources.loadTexture("brick5", "brick5.png");
-        resources.loadTexture("brick6", "brick6.png");
-        resources.loadTexture("ball", "ball.png");
-
+        Resources.getInstance().load();
         batch = new SpriteBatch();
         font = new BitmapFont();
         this.setScreen(new MainMenuScreen(this));

@@ -2,11 +2,11 @@ package com.nuclearthinking.arcanoid.objects;
 
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.World;
-import com.nuclearthinking.arcanoid.BrickType;
+import com.nuclearthinking.arcanoid.utils.BrickType;
 
 import java.util.ArrayList;
 import java.util.List;
-import static com.nuclearthinking.arcanoid.Vars.PPM;
+import static com.nuclearthinking.arcanoid.utils.Vars.PPM;
 /**
  * Date: 20.03.2016
  * Time: 21:01

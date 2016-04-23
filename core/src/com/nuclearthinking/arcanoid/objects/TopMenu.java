@@ -2,10 +2,10 @@ package com.nuclearthinking.arcanoid.objects;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.nuclearthinking.arcanoid.FontFactory;
+import com.nuclearthinking.arcanoid.utils.FontFactory;
 import com.nuclearthinking.arcanoid.GameState;
 import com.nuclearthinking.arcanoid.Resources;
-import com.nuclearthinking.arcanoid.Vars;
+import com.nuclearthinking.arcanoid.utils.Vars;
 
 /**
  * Date: 23.04.2016

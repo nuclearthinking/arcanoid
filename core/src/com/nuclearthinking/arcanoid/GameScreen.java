@@ -5,15 +5,16 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.World;
 import com.nuclearthinking.arcanoid.objects.*;
+import com.nuclearthinking.arcanoid.utils.ColorPalette;
+import com.nuclearthinking.arcanoid.utils.Vars;
 
 import java.util.List;
 
-import static com.nuclearthinking.arcanoid.Vars.PPM;
+import static com.nuclearthinking.arcanoid.utils.Vars.PPM;
 
 /**
  * Date: 12.03.2016

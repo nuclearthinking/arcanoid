@@ -5,10 +5,10 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 import com.nuclearthinking.arcanoid.Controller;
-import com.nuclearthinking.arcanoid.EntityDictionary;
+import com.nuclearthinking.arcanoid.utils.EntityDictionary;
 import com.nuclearthinking.arcanoid.Resources;
 
-import static com.nuclearthinking.arcanoid.Vars.PPM;
+import static com.nuclearthinking.arcanoid.utils.Vars.PPM;
 
 /**
  * Date: 26.03.2016

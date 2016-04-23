@@ -5,10 +5,10 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
-import com.nuclearthinking.arcanoid.BrickType;
+import com.nuclearthinking.arcanoid.utils.BrickType;
 import com.nuclearthinking.arcanoid.Resources;
 
-import static com.nuclearthinking.arcanoid.Vars.*;
+import static com.nuclearthinking.arcanoid.utils.Vars.*;
 
 /**
  * Date: 20.03.2016

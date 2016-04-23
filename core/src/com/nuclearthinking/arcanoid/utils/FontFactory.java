@@ -1,4 +1,4 @@
-package com.nuclearthinking.arcanoid;
+package com.nuclearthinking.arcanoid.utils;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;

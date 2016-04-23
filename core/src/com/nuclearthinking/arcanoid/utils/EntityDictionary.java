@@ -1,4 +1,4 @@
-package com.nuclearthinking.arcanoid;
+package com.nuclearthinking.arcanoid.utils;
 
 /**
  * Date: 01.04.2016

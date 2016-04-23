@@ -7,9 +7,9 @@ import com.badlogic.gdx.physics.box2d.*;
 import com.badlogic.gdx.physics.box2d.joints.PrismaticJointDef;
 import com.nuclearthinking.arcanoid.Controller;
 import com.nuclearthinking.arcanoid.Resources;
-import com.nuclearthinking.arcanoid.Vars;
+import com.nuclearthinking.arcanoid.utils.Vars;
 
-import static com.nuclearthinking.arcanoid.Vars.PPM;
+import static com.nuclearthinking.arcanoid.utils.Vars.PPM;
 
 /**
  * Date: 26.03.2016

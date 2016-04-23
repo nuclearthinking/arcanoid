@@ -6,6 +6,8 @@ import com.badlogic.gdx.physics.box2d.ContactListener;
 import com.badlogic.gdx.physics.box2d.Manifold;
 import com.nuclearthinking.arcanoid.objects.Brick;
 import com.nuclearthinking.arcanoid.objects.Platform;
+import com.nuclearthinking.arcanoid.utils.DeleteQueue;
+import com.nuclearthinking.arcanoid.utils.EntityDictionary;
 
 /**
  * Date: 27.03.2016

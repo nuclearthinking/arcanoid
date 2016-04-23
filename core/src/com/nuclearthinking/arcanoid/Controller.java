@@ -7,8 +7,9 @@ import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.World;
 import com.nuclearthinking.arcanoid.objects.*;
+import com.nuclearthinking.arcanoid.utils.DeleteQueue;
 
-import static com.nuclearthinking.arcanoid.Vars.*;
+import static com.nuclearthinking.arcanoid.utils.Vars.*;
 
 /**
  * Date: 02.04.2016

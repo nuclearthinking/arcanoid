@@ -1,4 +1,4 @@
-package com.nuclearthinking.arcanoid;
+package com.nuclearthinking.arcanoid.utils;
 
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.utils.Array;
