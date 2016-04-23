@@ -12,32 +12,20 @@ import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
  */
 public class FontFactory {
     private static FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("font.TTF"));
-    private static BitmapFont font10;
-    private static BitmapFont font25;
+    private static BitmapFont font9;
 
-    public static BitmapFont getFont10() {
-        if (font10 == null) {
+    public static BitmapFont getFont9() {
+        if (font9 == null) {
             FreeTypeFontGenerator.FreeTypeFontParameter parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
             parameter.size = 9;
             generateFont8(parameter);
         }
-        return font10;
+        return font9;
     }
 
-    public static BitmapFont getFont25() {
-        if (font25 == null) {
-            FreeTypeFontGenerator.FreeTypeFontParameter parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
-            parameter.size = 25;
-            generateFont25(parameter);
-        }
-        return font25;
-    }
 
     private static void generateFont8(FreeTypeFontGenerator.FreeTypeFontParameter param) {
-        font10 = generator.generateFont(param);
+        font9 = generator.generateFont(param);
     }
 
-    private static void generateFont25(FreeTypeFontGenerator.FreeTypeFontParameter param) {
-        font25 = generator.generateFont(param);
-    }
 }

@@ -41,7 +41,7 @@ public class GameScreen implements Screen {
         this.mainGame = mainGame;
         world = new World(new Vector2(0, 0), true);
         World.setVelocityThreshold(0.5f);
-        controller = new Controller(world);
+        controller = new Controller(world, mainGame.batch);
         world.setContactListener(new ContactsListener());
         resources = Resources.getInstance();
         backgroundColor = ColorPalette.BACKGROUND;
@@ -69,21 +69,23 @@ public class GameScreen implements Screen {
 
     @Override
     public void render(float delta) {
+        controller.update();
 
         int hearthXPos = Vars.WIDTH - (16 + 5);
         Gdx.gl.glClearColor(backgroundColor.r, backgroundColor.g, backgroundColor.b, 1);
-
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-        controller.update();
+
         visual.update();
         camera.update();
-
         mainGame.batch.setProjectionMatrix(visual.combined);
-        mainGame.batch.begin();
-        mainGame.batch.draw(ballTexture, (ball.getBody().getPosition().x - (16 / PPM) / 2) * PPM, (ball.getBody().getPosition().y - (16 / PPM) / 2) * PPM);
-        mainGame.batch.draw(topMenu, 0, Vars.HEIGHT - Vars.TOPMENU_HEIGHT);
-        mainGame.batch.draw(platform.getTexture(), (platform.getPosition().x - (Vars.ARCANOID_WIDTH / PPM) / 2) * PPM, (platform.getPosition().y - (Vars.ARCANOID_HEIGHT / PPM) / 2) * PPM);
 
+        mainGame.batch.begin();
+        //#####START RENDERING
+
+
+        mainGame.batch.draw(topMenu, 0, Vars.HEIGHT - Vars.TOPMENU_HEIGHT);
+        ball.render();
+        platform.render();
         for (int i = 0; i < GameState.getInstance().getLifeAmount(); i++) {
             mainGame.batch.draw(hearth, hearthXPos, Vars.HEIGHT - 25);
             hearthXPos -= 20;
@@ -93,11 +95,14 @@ public class GameScreen implements Screen {
                 mainGame.batch.draw(brick.getTexture(), (brick.getPosition().x - 40f / PPM) * PPM, (brick.getPosition().y - 10f / PPM) * PPM);
             }
         }
-        FontFactory.getFont10().draw(mainGame.batch, GameState.getInstance().getScoreString(), 20, 445);
+        FontFactory.getFont9().draw(mainGame.batch, GameState.getInstance().getScoreString(), 20, 445);
+
+
+
+        //#####END RENDERING#####
         mainGame.batch.end();
 
         world.step(Gdx.graphics.getDeltaTime(), 8, 3);
-
         if (Vars.DEBUG) {
             box2DDebugRenderer.render(world, camera.combined);
         }

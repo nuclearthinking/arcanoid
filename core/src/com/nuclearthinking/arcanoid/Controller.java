@@ -1,6 +1,7 @@
 package com.nuclearthinking.arcanoid;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
@@ -23,20 +24,28 @@ public class Controller {
     private Platform platform;
     private Border border;
     private Wall wall;
-
+    private SpriteBatch spriteBatch;
     boolean mouseClicked = false;
 
-    public Controller(World world) {
+    public Controller(World world, SpriteBatch spriteBatch) {
         this.world = world;
+        this.spriteBatch = spriteBatch;
         deleteQueue = new DeleteQueue();
         prepareController();
     }
 
+    public World getWorld() {
+        return world;
+    }
+
+    public SpriteBatch getSpriteBatch() {
+        return spriteBatch;
+    }
+
     final void prepareController() {
         world.setContactListener(new ContactsListener());
-        ball = new Ball(world.createBody(dynamicBody()));
-        ball.getBody().setActive(false);
-        platform = new Platform(world);
+        ball = new Ball(this);
+        platform = new Platform(this);
         border = new Border(world.createBody(staticBody()));
         wall = new Wall(Level.LEVEL2, world);
     }
