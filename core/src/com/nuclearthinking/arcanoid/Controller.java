@@ -40,7 +40,7 @@ public class Controller {
         ball = new Ball(this);
         platform = new Platform(this);
         border = new Border(world.createBody(staticBody()));
-        wall = new Wall(Level.LEVEL2, this);
+        wall = new Wall(this);
     }
 
     public final void update() {
@@ -49,6 +49,16 @@ public class Controller {
         isDead();
         speedAcceleration();
         executeCleaning();
+        if (wall.isLevelCleared()) {
+            nextLevel();
+        }
+    }
+
+    void nextLevel() {
+        wall = new Wall(this);
+        mouseClicked = false;
+        ball.getBody().setLinearVelocity(0, 0);
+        ball.getBody().setActive(false);
     }
 
     private void executeCleaning() {

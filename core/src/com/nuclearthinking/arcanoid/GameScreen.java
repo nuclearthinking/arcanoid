@@ -25,14 +25,15 @@ public class GameScreen implements Screen {
     private final Resources resources;
     private final Color backgroundColor;
     private OrthographicCamera camera, visual;
-    private final Wall wall;
+    private Wall wall;
+
     World world;
+
     Ball ball;
     Platform platform;
     Box2DDebugRenderer box2DDebugRenderer = new Box2DDebugRenderer();
     Controller controller;
     TopMenu topMenu;
-
     public GameScreen(final Arcanoid mainGame) {
         this.mainGame = mainGame;
         world = new World(new Vector2(0, 0), true);
@@ -44,8 +45,6 @@ public class GameScreen implements Screen {
         topMenu = new TopMenu(mainGame.batch);
 
 
-        //TODO Создать VIEW для них
-        wall = controller.getWall();
 
         //TODO Перенести в контроллер
         platform = controller.getPlatform();
@@ -63,6 +62,7 @@ public class GameScreen implements Screen {
 
     @Override
     public void render(float delta) {
+        wall = controller.getWall();
         Gdx.gl.glClearColor(backgroundColor.r, backgroundColor.g, backgroundColor.b, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 

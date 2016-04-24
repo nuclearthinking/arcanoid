@@ -4,6 +4,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.World;
 import com.nuclearthinking.arcanoid.Controller;
+import com.nuclearthinking.arcanoid.Levels;
 import com.nuclearthinking.arcanoid.utils.BrickType;
 
 import java.util.ArrayList;
@@ -22,11 +23,12 @@ public class Wall {
     private final ArrayList<List<Brick>> wallRows;
     World world;
     SpriteBatch spriteBatch;
+    private boolean levelCleared = false;
 
-    public Wall(int[][] levelMap, Controller controller) {
+    public Wall(Controller controller) {
         this.world = controller.getWorld();
         this.spriteBatch = controller.getSpriteBatch();
-        wallRows = convertMapToWall(levelMap);
+        wallRows = convertMapToWall(Levels.getInstance().next());
     }
 
     private ArrayList<List<Brick>> convertMapToWall(int[][] levelMap) {
@@ -56,6 +58,8 @@ public class Wall {
                 list.remove(brick);
             }
         }
+
+        levelCleared = isCleared();
     }
 
     public void render() {
@@ -66,5 +70,17 @@ public class Wall {
                 spriteBatch.draw(brick.getTexture(), xPosition, yPosition);
             }
         }
+    }
+
+    boolean isCleared() {
+        int brickCount = 0;
+        for (List<Brick> wallRow : wallRows) {
+            brickCount += wallRow.size();
+        }
+        return brickCount == 0;
+    }
+
+    public boolean isLevelCleared() {
+        return levelCleared;
     }
 }
