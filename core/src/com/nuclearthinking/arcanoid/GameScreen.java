@@ -12,8 +12,6 @@ import com.nuclearthinking.arcanoid.objects.*;
 import com.nuclearthinking.arcanoid.utils.ColorPalette;
 import com.nuclearthinking.arcanoid.utils.Vars;
 
-import java.util.List;
-
 import static com.nuclearthinking.arcanoid.utils.Vars.PPM;
 
 /**
@@ -27,7 +25,7 @@ public class GameScreen implements Screen {
     private final Resources resources;
     private final Color backgroundColor;
     private OrthographicCamera camera, visual;
-    private final Wall gameWall;
+    private final Wall wall;
     World world;
     Ball ball;
     Platform platform;
@@ -47,7 +45,7 @@ public class GameScreen implements Screen {
 
 
         //TODO Создать VIEW для них
-        gameWall = controller.getWall();
+        wall = controller.getWall();
 
         //TODO Перенести в контроллер
         platform = controller.getPlatform();
@@ -74,18 +72,12 @@ public class GameScreen implements Screen {
         mainGame.batch.setProjectionMatrix(visual.combined);
 
         mainGame.batch.begin();
-        //#####START RENDERING
+        //#####START RENDERING###
 
         topMenu.render();
+        wall.render();
         ball.render();
         platform.render();
-
-        for (List<Brick> wallRow : gameWall.getWallArray()) {
-            for (Brick brick : wallRow) {
-                mainGame.batch.draw(brick.getTexture(), (brick.getPosition().x - 40f / PPM) * PPM, (brick.getPosition().y - 10f / PPM) * PPM);
-            }
-        }
-
 
         //#####END RENDERING#####
         mainGame.batch.end();

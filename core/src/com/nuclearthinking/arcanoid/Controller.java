@@ -40,7 +40,7 @@ public class Controller {
         ball = new Ball(this);
         platform = new Platform(this);
         border = new Border(world.createBody(staticBody()));
-        wall = new Wall(Level.LEVEL2, world);
+        wall = new Wall(Level.LEVEL2, this);
     }
 
     public final void update() {

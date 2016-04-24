@@ -17,6 +17,9 @@ import static com.nuclearthinking.arcanoid.utils.Vars.PPM;
  */
 public class Border {
 
+    static final float FRICTION = 1f;
+    static final float DENSITY = 0f;
+
     public Border(final Body body) {
         createCeiling(body);
         createLeftBorder(body);
@@ -24,28 +27,40 @@ public class Border {
     }
 
     public void createCeiling(Body body) {
+        float hx = (Vars.WIDTH / 2) / PPM;
+        float hy = (Vars.TOPMENU_HEIGHT / 2) / PPM;
+        float x = (Vars.WIDTH / 2) / PPM;
+        float y = (Vars.HEIGHT - (Vars.TOPMENU_HEIGHT / 2)) / PPM;
         PolygonShape shape = new PolygonShape();
-        shape.setAsBox((Vars.WIDTH / 2) / PPM, (Vars.TOPMENU_HEIGHT / 2) / PPM, new Vector2((Vars.WIDTH / 2) / PPM, (Vars.HEIGHT - (Vars.TOPMENU_HEIGHT / 2)) / PPM), 0);
-        Fixture ceiling = body.createFixture(shape, 0);
-        ceiling.setFriction(1f);
+        shape.setAsBox(hx, hy, new Vector2(x, y), 0);
+        Fixture ceiling = body.createFixture(shape, DENSITY);
+        ceiling.setFriction(FRICTION);
         ceiling.setUserData(EntityDictionary.BORDER);
         shape.dispose();
     }
 
     public void createLeftBorder(Body body) {
+        float hx = (1 / 2) / PPM;
+        float hy = (Vars.HEIGHT / 2) / PPM;
+        float y = (Vars.HEIGHT / 2) / PPM;
+        float x = 0f;
         PolygonShape shape = new PolygonShape();
-        shape.setAsBox((1 / 2) / PPM, (Vars.HEIGHT / 2) / PPM, new Vector2(0, (Vars.HEIGHT / 2) / PPM), 0);
-        Fixture leftBorder = body.createFixture(shape, 0);
-        leftBorder.setFriction(1f);
+        shape.setAsBox(hx, hy, new Vector2(x, y), 0);
+        Fixture leftBorder = body.createFixture(shape, DENSITY);
+        leftBorder.setFriction(FRICTION);
         leftBorder.setUserData(EntityDictionary.BORDER);
         shape.dispose();
     }
 
     void createRightBorder(Body body) {
+        float hx = (1 / 2) / PPM;
+        float hy = (Vars.HEIGHT / 2) / PPM;
+        float x = Vars.WIDTH / PPM;
+        float y = (Vars.HEIGHT / 2) / PPM;
         PolygonShape shape = new PolygonShape();
-        shape.setAsBox((1 / 2) / PPM, (Vars.HEIGHT / 2) / PPM, new Vector2(Vars.WIDTH / PPM, (Vars.HEIGHT / 2) / PPM), 0);
-        Fixture rightBorder = body.createFixture(shape, 0);
-        rightBorder.setFriction(1f);
+        shape.setAsBox(hx, hy, new Vector2(x, y), 0);
+        Fixture rightBorder = body.createFixture(shape, DENSITY);
+        rightBorder.setFriction(FRICTION);
         rightBorder.setUserData(EntityDictionary.BORDER);
         shape.dispose();
     }
